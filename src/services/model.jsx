@@ -20,6 +20,6 @@ const modelSlice = createSlice({
   },
 });
 
-export const { SetId,SetCurrId, setShow } = modelSlice.actions;
+export const { SetId, SetCurrId, setShow } = modelSlice.actions;
 
 export default modelSlice.reducer;

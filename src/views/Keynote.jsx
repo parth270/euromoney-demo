@@ -2,7 +2,7 @@ import React from "react";
 import IndexLayout from "../layouts/keynote";
 
 const Keynote = () => {
-  return <IndexLayout/>
+  return <IndexLayout />;
 };
 
 export default Keynote;

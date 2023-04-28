@@ -195,14 +195,12 @@ const Input = () => {
   const dispatch = useDispatch();
   return (
     <div
-      style={{ zIndex: 1008}}
+      style={{ zIndex: 1008 }}
       className="absolute left-[30%] top-[60vh] w-[40%] backdrop-blur-md h-[60px] pl-[19px] pr-[10px] overflow-hidden bg-transparent border-[4px] border-[#fff] bg-[#232323] items-center flex rounded-[34px]"
     >
       <input
         type="text"
-        placeholder={
-          "Which Report would you like to view?"
-        }
+        placeholder={"Which Report would you like to view?"}
         className="w-[100%] h-[50px] px-[15px] outline-none text-[#fff] bg-transparent text-[18px] font-medium tracking-wider"
       />
       <div

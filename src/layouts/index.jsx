@@ -13,6 +13,7 @@ import Model2 from "../components/model/model-2";
 import Model3 from "../components/model/model-3";
 import { Power4 } from "gsap";
 import { Tween } from "react-gsap";
+import useSound from "use-sound";
 
 const poss = [
   {
@@ -47,6 +48,11 @@ const Navbar = () => {
 const Footer = () => {
   const state = useSelector((state) => state.three);
   const dispatch = useDispatch();
+
+  const [play1] = useSound("/about.mp3");
+  const [play2] = useSound("/research.mp3");
+  const [play3] = useSound("/services.mp3");
+  const [play4] = useSound("/contact.mp3");
 
   const About = () => {
     const arr = [];
@@ -143,6 +149,7 @@ const Footer = () => {
           className="text-[#000] font-medium text-[16px] cursor-pointer hover:scale-110"
           onClick={() => {
             if (state.animation) {
+              play1();
               About();
             }
           }}
@@ -153,6 +160,7 @@ const Footer = () => {
           className="text-[#000] font-medium text-[16px] cursor-pointer hover:scale-110"
           onClick={() => {
             if (state.animation) {
+              play2();
               Research();
             }
           }}
@@ -163,6 +171,7 @@ const Footer = () => {
           className="text-[#000] font-medium text-[16px] cursor-pointer hover:scale-110"
           onClick={() => {
             if (state.animation) {
+              play3();
               Services();
             }
           }}
@@ -173,6 +182,7 @@ const Footer = () => {
           className="text-[#000] font-medium text-[16px] cursor-pointer hover:scale-110"
           onClick={() => {
             if (state.animation) {
+              play4();
               Contact();
             }
           }}
