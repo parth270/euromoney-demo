@@ -49,7 +49,7 @@ const Aud = () => {
       console.log(first);
       first.className = "flex w-[100%]";
       first.children[0].className =
-        "font-medium text-[12px] text-[#fff] flex w-[70px] justify-between absolute w-[161px] items-center";
+        "font-medium text-[12px] text-[#fff] flex w-[70px] justify-between absolute w-[190px] items-center";
       first.children[1].className =
         "flex w-[160px] justify-center absolute px-[50px]";
       first.children[1].children[0].style.display = "none";
