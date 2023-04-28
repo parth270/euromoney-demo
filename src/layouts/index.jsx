@@ -1,6 +1,13 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { setCurrId, setId, setShow, setTransition } from "../services/three";
+import {
+  setCurrId,
+  setId,
+  setKeyTrans,
+  setKeynote,
+  setShow,
+  setTransition,
+} from "../services/three";
 import Model1 from "../components/model/model-1";
 import Model2 from "../components/model/model-2";
 import Model3 from "../components/model/model-3";
@@ -74,6 +81,10 @@ const Footer = () => {
     setTimeout(() => {
       dispatch(setId(2));
     }, 1000);
+    setTimeout(() => {
+      dispatch(setKeynote(true));
+      dispatch(setKeyTrans(true));
+    }, 1500);
   };
 
   const Services = () => {

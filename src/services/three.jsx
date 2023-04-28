@@ -9,6 +9,8 @@ const threeSlice = createSlice({
     animation: true,
     id: null,
     currId: null,
+    keynote: false,
+    keynoteTrans:false
   },
   reducers: {
     setShow: (state, action) => {
@@ -33,6 +35,12 @@ const threeSlice = createSlice({
     setCurrId: (state, action) => {
       state.currId = action.payload;
     },
+    setKeynote: (state, action) => {
+      state.keynote = action.payload;
+    },
+    setKeyTrans: (state, action) => {
+      state.keynoteTrans = action.payload;
+    },
   },
 });
 
@@ -43,6 +51,8 @@ export const {
   removeTransition,
   setId,
   setCurrId,
+  setKeynote,
+  setKeyTrans
 } = threeSlice.actions;
 
 export default threeSlice.reducer;

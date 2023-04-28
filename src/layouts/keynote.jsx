@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { setCurrId, setId } from "../services/model";
+import { SetCurrId, SetId } from "../services/model";
 import { Power4 } from "gsap";
 import { Tween } from "react-gsap";
 import Model1 from "../components/model/keynote/model-1";
@@ -8,6 +8,14 @@ import Model2 from "../components/model/keynote/model-2";
 import Model3 from "../components/model/keynote/model-3";
 import Model4 from "../components/model/keynote/model-4";
 import AudioPlayer from "react-h5-audio-player";
+import {
+  setCurrId,
+  setId,
+  setKeyTrans,
+  setKeynote,
+  setShow,
+  setTransition,
+} from "../services/three";
 
 const poss = [
   {
@@ -143,14 +151,75 @@ const Aud = () => {
 
 const Navbar = () => {
   const state = useSelector((state) => state.model);
-
+  const dispatch = useDispatch();
   return (
     <div
       className="w-[100%] h-[80px] bg-[#21363D] px-[40px] flex items-center absolute justify-between"
       style={{ zIndex: 1000000000000 }}
     >
-      <img src="/logo-1.png" className="w-[180px]" alt="" />
+      <img
+        src="/logo-1.png"
+        className="w-[180px] cursor-pointer"
+        onClick={() => {
+          dispatch(setKeyTrans(false));
+          setTimeout(() => {
+            dispatch(setKeynote(true));
+            dispatch(setCurrId(null));
+            setTimeout(() => {
+              dispatch(setId(null));
+            }, 1000);
+            const arr = [];
+            if (state.id) {
+              if (state.id) {
+                arr.push({ ...poss[state.id - 1], duration: 0.5 });
+              }
+            }
+            arr.push({
+              pos: [0, 0, 10],
+              target: [0, 0, 0],
+              timer: 500,
+            });
+            dispatch(setTransition(arr));
+            dispatch(setShow(true));
+          }, 1800);
+        }}
+        alt=""
+      />
       {state.currId === 2 && <Aud />}
+    </div>
+  );
+};
+
+const Input = () => {
+  const state = useSelector((state) => state.model);
+  const dispatch = useDispatch();
+  return (
+    <div
+      style={{ zIndex: 1008}}
+      className="absolute left-[30%] top-[60vh] w-[40%] backdrop-blur-md h-[60px] pl-[19px] pr-[10px] overflow-hidden bg-transparent border-[4px] border-[#fff] bg-[#232323] items-center flex rounded-[34px]"
+    >
+      <input
+        type="text"
+        placeholder={
+          "Which Report would you like to view?"
+        }
+        className="w-[100%] h-[50px] px-[15px] outline-none text-[#fff] bg-transparent text-[18px] font-medium tracking-wider"
+      />
+      <div
+        className="w-[60px] flex items-center justify-center cursor-pointer"
+        onClick={() => {
+          dispatch(SetCurrId(1));
+          if (state.id) {
+            setTimeout(() => {
+              dispatch(SetId(1));
+            }, 1000);
+          } else {
+            dispatch(SetId(1));
+          }
+        }}
+      >
+        <img src="/UI/SVG/Asset 2.svg" alt="" className="w-[20px] " />
+      </div>
     </div>
   );
 };
@@ -178,13 +247,13 @@ const Footer = () => {
         <p
           className="text-[#000] font-medium text-[16px] cursor-pointer hover:scale-110"
           onClick={() => {
-            dispatch(setCurrId(1));
+            dispatch(SetCurrId(1));
             if (state.id) {
               setTimeout(() => {
-                dispatch(setId(1));
+                dispatch(SetId(1));
               }, 1000);
             } else {
-              dispatch(setId(1));
+              dispatch(SetId(1));
             }
           }}
         >
@@ -193,13 +262,13 @@ const Footer = () => {
         <p
           className="text-[#000] font-medium text-[16px] cursor-pointer hover:scale-110"
           onClick={() => {
-            dispatch(setCurrId(2));
+            dispatch(SetCurrId(2));
             if (state.id) {
               setTimeout(() => {
-                dispatch(setId(2));
+                dispatch(SetId(2));
               }, 1000);
             } else {
-              dispatch(setId(2));
+              dispatch(SetId(2));
             }
           }}
         >
@@ -208,13 +277,13 @@ const Footer = () => {
         <p
           className="text-[#000] font-medium text-[16px] cursor-pointer hover:scale-110"
           onClick={() => {
-            dispatch(setCurrId(3));
+            dispatch(SetCurrId(3));
             if (state.id) {
               setTimeout(() => {
-                dispatch(setId(3));
+                dispatch(SetId(3));
               }, 1000);
             } else {
-              dispatch(setId(3));
+              dispatch(SetId(3));
             }
           }}
         >
@@ -223,13 +292,13 @@ const Footer = () => {
         <p
           className="text-[#000] font-medium text-[16px] cursor-pointer hover:scale-110"
           onClick={() => {
-            dispatch(setCurrId(4));
+            dispatch(SetCurrId(4));
             if (state.id) {
               setTimeout(() => {
-                dispatch(setId(4));
+                dispatch(SetId(4));
               }, 1000);
             } else {
-              dispatch(setId(4));
+              dispatch(SetId(4));
             }
           }}
         >
@@ -241,7 +310,9 @@ const Footer = () => {
 };
 
 const IndexLayout = ({ children }) => {
-  const state = useSelector((state) => state.three);
+  const keynote = useSelector((state) => state.three.keynote);
+  const keynoteTrans = useSelector((state) => state.three.keynoteTrans);
+  const state = useSelector((state) => state.model);
   const dispatch = useDispatch();
   const videoEl = useRef();
   const attemptPlay = () => {
@@ -257,46 +328,66 @@ const IndexLayout = ({ children }) => {
   }, []);
 
   return (
-    <div className="w-[100%] h-[100vh]">
-      <Navbar />
-      {state.id && (
-        <div
-          className="w-[29px] cursor-pointer flex items-center justify-center h-[29px] rounded-md bg-[#fff] absolute top-[100px] right-[40px]"
-          style={{ zIndex: 1100 }}
-          onClick={() => {
-            dispatch(setCurrId(null));
-            setTimeout(() => {
-              dispatch(setId(null));
-            }, 1000);
+    <>
+      {keynote && (
+        <Tween
+          from={{
+            clipPath: "inset(0px 1000px 1px 1001px)",
           }}
+          to={{
+            clipPath: !keynoteTrans
+              ? "inset(0px 1000px 1px 1001px)"
+              : "inset(0px 0vw 1px 0px)",
+          }}
+          ease={Power4.easeInOut}
+          duration={1.8}
         >
-          <img src="/Cross.svg" alt="" />
-        </div>
+          <div
+            className="w-[100%] h-[100vh] absolute "
+            style={{ zIndex: 1000000000000 }}
+          >
+            <Navbar />
+            {state.id && (
+              <div
+                className="w-[29px] cursor-pointer flex items-center justify-center h-[29px] rounded-md bg-[#fff] absolute top-[100px] right-[40px]"
+                style={{ zIndex: 1100 }}
+                onClick={() => {
+                  dispatch(SetCurrId(null));
+                  setTimeout(() => {
+                    dispatch(SetId(null));
+                  }, 1000);
+                }}
+              >
+                <img src="/Cross.svg" alt="" />
+              </div>
+            )}
+            <Model1 />
+            <Model2 />
+            <Model3 />
+            <Model4 />
+            <Input />
+            <div className="w-[100%] h-[100vh] overflow-hidden">
+              <div className="absolute w-[100%] h-[100vh] flex items-center justify-center">
+                <video
+                  className="w-[750px] h-[550px] "
+                  autoPlay
+                  style={{
+                    zIndex: 1000,
+                  }}
+                  playsInline
+                  loop
+                  muted
+                  src={"/BG-KEYNOTE.mp4"}
+                  ref={videoEl}
+                ></video>
+              </div>
+              <img src="/bg.png" alt="" className="pointer-events-none" />
+            </div>
+            <Footer />
+          </div>
+        </Tween>
       )}
-      <Model1 />
-      <Model2 />
-      <Model3 />
-      <Model4 />
-      <div className="w-[100%] h-[100vh] overflow-hidden">
-        <div className="absolute w-[100%] h-[100vh] flex items-center justify-center">
-          <video
-            className="w-[750px] h-[550px] "
-            autoPlay
-            style={{
-              zIndex: 1000,
-            }}
-            playsInline
-            loop
-            muted
-            src={"/BG-KEYNOTE.mp4"}
-            ref={videoEl}
-          ></video>
-        </div>
-        <img src="/bg.png" alt="" className="pointer-events-none" />
-      </div>
-
-      <Footer />
-    </div>
+    </>
   );
 };
 

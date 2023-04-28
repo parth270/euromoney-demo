@@ -18,6 +18,8 @@ import {
   setAnimation,
   setCurrId,
   setId,
+  setKeyTrans,
+  setKeynote,
   setShow,
 } from "../../../services/three";
 
@@ -224,6 +226,8 @@ const DisksContainer = ({ bind1 }) => {
                   setEnabled(true);
                   dispatch(setCurrId(2));
 
+                  dispatch(setKeynote(true));
+                  dispatch(setKeyTrans(true));
                   dispatch(setAnimation(true));
                 },
                 ease: Power4.easeOut,

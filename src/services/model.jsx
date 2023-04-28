@@ -8,10 +8,10 @@ const modelSlice = createSlice({
     currId: null,
   },
   reducers: {
-    setId: (state, action) => {
+    SetId: (state, action) => {
       state.id = action.payload;
     },
-    setCurrId: (state, action) => {
+    SetCurrId: (state, action) => {
       state.currId = action.payload;
     },
     setShow: (state, action) => {
@@ -20,6 +20,6 @@ const modelSlice = createSlice({
   },
 });
 
-export const { setId,setCurrId, setShow } = modelSlice.actions;
+export const { SetId,SetCurrId, setShow } = modelSlice.actions;
 
 export default modelSlice.reducer;

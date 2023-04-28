@@ -13,7 +13,7 @@ const ContactContainer = ({ title, content, high }) => {
       </p>
       <div className="w-[300px]">
         <p className="text-[15px] font-medium ml-[10px] uppercase">{content}</p>
-        <p className="ml-[10px] text-[#00a079] cursor-pointer">{high}</p>
+        <p className="ml-[10px] text-[#000] cursor-pointer">{high}</p>
       </div>
     </div>
   );
