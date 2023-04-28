@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useRef, useState } from "react";
 import Chart from "../../ChartsReal";
 import { Tween } from "react-gsap";
 import { Power4 } from "gsap";
@@ -60,6 +60,20 @@ const Model = () => {
     BCA Research's battles common market narrative that EM stocks are cheap and reiterated its negative stance on EM.`,
   ];
   const state = useSelector((state) => state.model);
+  const videoEl = useRef();
+  const attemptPlay = () => {
+    videoEl &&
+      videoEl.current &&
+      videoEl.current.play().catch((error) => {
+        console.error("Error attempting to play", error);
+      });
+  };
+
+  useEffect(() => {
+    attemptPlay();
+  }, []);
+  const [play, setPlay] = useState(true);
+
   return (
     <>
       {state.id === 3 && (
@@ -79,27 +93,29 @@ const Model = () => {
             ease={Power4.easeInOut}
             duration={0.7}
           >
-            <div className="w-[100%] max-w-[1330px] h-[100%] backdrop-blur-xl px-[50px] flex justify-between items-center bg-[#ffffff17]">
-              <div className="w-[100%] flex flex-col justify-center ">
-                <h1 className="text-[#000] border-l-[8px] border-[#0d383f] pl-[30px] font-medium text-[35px] mb-[10px]">
-                  {title}:
-                </h1>
-                <div className="w-[100%] overflow-y-auto scroll-bar-cool h-[400px] pr-[50px]">
-                  {content.map((item, i) => {
-                    return (
-                      <p
-                        key={i}
-                        className="text-[#000] text-[18px] mt-[10px] font-medium"
-                      >
-                        {item}
-                      </p>
-                    );
-                  })}
-                </div>
+            <div className="w-[100%] max-w-[1330px] py-[30px] h-[100%] backdrop-blur-xl px-[50px] flex justify-between items-center bg-[#ffffff17]">
+              <div className="w-[100%] py-[30px] flex flex-col justify-center ">
+                <video
+                  className="w-[100%] h-[98%] cursor-pointer "
+                  autoPlay
+                  style={{
+                    zIndex: 1000,
+                  }}
+                  playsInline
+                  onClick={() => {
+                    if (!play) {
+                      videoEl.current.play();
+                      setPlay(true);
+                    } else {
+                      videoEl.current.pause();
+                      setPlay(false);
+                    }
+                  }}
+                  loop
+                  src={"/bgWeb.mp4"}
+                  ref={videoEl}
+                ></video>
               </div>
-              {/* <div className="w-[48%] h-[400px] ">
-                <Chart />
-              </div> */}
             </div>
           </Tween>
         </div>
