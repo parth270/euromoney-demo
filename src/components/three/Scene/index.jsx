@@ -22,6 +22,7 @@ import {
   setKeynote,
   setShow,
 } from "../../../services/three";
+import useSound from "use-sound";
 
 const DisksContainer = ({ bind1 }) => {
   const { camera } = useThree();
@@ -110,6 +111,15 @@ const DisksContainer = ({ bind1 }) => {
   }, [state.transitionBreak]);
 
   console.log(state.id);
+
+  const [play, { stop }] = useSound("/background_music.mp3");
+  React.useEffect(() => {
+    if (!state.keynote) {
+      play();
+    } else {
+      stop();
+    }
+  }, [state.keynote]);
 
   return (
     <>
