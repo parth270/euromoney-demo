@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
   setCurrId,
@@ -197,9 +197,11 @@ const Footer = () => {
 const IndexLayout = ({ children }) => {
   const state = useSelector((state) => state.three);
   const dispatch = useDispatch();
+
   return (
     <div className="w-[100%] h-[100vh]">
       <Navbar />
+
       {!state.show && (
         <div
           className="w-[29px] cursor-pointer flex items-center justify-center h-[29px] rounded-md bg-[#fff] absolute top-[100px] right-[40px]"
