@@ -7,6 +7,7 @@ import RealView from "./routes/real-view";
 import { Provider } from "react-redux";
 import { store } from "./services/store";
 import Keynote from "./routes/keynote";
+import Login from "./components/login";
 
 const router = createBrowserRouter([
   {
@@ -19,13 +20,15 @@ const router = createBrowserRouter([
   },
   {
     path: "keynote",
-    element: <Keynote/>,
+    element: <Keynote />,
   },
 ]);
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <Provider store={store}>
-    <RouterProvider router={router} />
+    <Login>
+      <RouterProvider router={router} />
+    </Login>
   </Provider>
 );
